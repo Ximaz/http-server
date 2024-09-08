@@ -11,6 +11,7 @@ TESTS_NAME	:=	unit_tests
 OS	:=	$(shell uname -s)
 
 # Sources compilation flags
+
 CPPFLAGS	:=	-Iinclude/
 CFLAGS	:=	-Wall -Wextra -Werror -pedantic -ansi -fPIE 		 			\
 			-fno-delete-null-pointer-checks -fno-strict-overflow 			\
@@ -29,6 +30,7 @@ ifeq ($(OS),Darwin)
 endif
 
 # Tests compilation flags
+
 TESTS_CFLAGS	:=	-g -Wall -Wextra -Werror --coverage -DCRITERION_TESTS
 TESTS_CPPFLAGS	:=	-Iinclude/
 TESTS_LDFLAGS	:=	-lcriterion
@@ -39,6 +41,7 @@ ifeq ($(OS),Darwin)
 endif
 
 # Valgrind flags
+
 VALGRIND_FLAGS	:=	-s							\
 					--leak-check=full			\
 					--track-origins=yes			\
@@ -49,14 +52,17 @@ VALGRIND_FLAGS	:=	-s							\
 					--errors-for-leak-kinds=all
 
 # Sources files
+
 SRCS			:=	$(shell find src -type f -name '*.c')
 OBJS			:=	$(SRCS:.c=.o)
 
 # Tests files
+
 TESTS_SRCS		:=	$(shell find tests -type f -name 'tests_*.c')
 TESTS_OBJS		:=	$(TESTS_SRCS:.c=.o)
 
 # Aliases
+
 RM	:=	rm -rf
 
 # Sources compilation
