@@ -36,8 +36,8 @@ jobs:
                     fetch-depth: 0
 
             -   name: "Checking makefile rules"
-                timeout-minutes: 1
                 run: "/bin/bash .github/workflows/basics.bash"
+                timeout-minutes: 1
 
     coding-style:
         runs-on: "ubuntu-latest"
@@ -76,8 +76,8 @@ jobs:
                     fetch-depth: 0
 
             -   name: "Run tests"
+                run: "/bin/bash .github/workflows/run_tests.bash"
                 timeout-minutes: 1
-                run: "[[ $(grep -E \"^tests_run:\" Makefile) == \"\" ]] && exit 0 || make tests_run"
 
             -   name: "Run Valgrind"
                 uses: "Ximaz/valgrind-action@v1.2.0"
