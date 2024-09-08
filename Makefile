@@ -19,7 +19,7 @@ CFLAGS	:=	-Wall -Wextra -Werror -pedantic -ansi -fPIE 		 \
 			-U_FORTIFY_SOURCE -D_GLIBCXX_ASSERTIONS 			 \
 			-fstack-protector-strong
 
-ifeq ($(PROCESSOR_ARCHITECTURE),x86_64)
+ifeq ($(PLATFORM),x86_64)
 	CFLAGS	+=	-fcf-protection=full -Wl,-z,nodlopen -Wl,-z,noexecstack \
 				-Wl,-z,relro -Wl,-z,now -fstack-clash-protection 		\
 				-fstrict-flex-arrays=3 -Wtrampolines
@@ -32,7 +32,7 @@ endif
 # Tests compilation flags
 TESTS_CFLAGS	:=	-g -Wall -Wextra -Werror --coverage -DCRITERION_TESTS
 
-ifeq ($(PROCESSOR_ARCHITECTURE),x86_64)
+ifeq ($(PLATFORM),x86_64)
 	TESTS_CPPFLAGS	:=	-Iinclude/
 	TESTS_LDFLAGS	:=	-lcriterion
 endif
