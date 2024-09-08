@@ -20,9 +20,9 @@ CFLAGS	:=	-Wall -Wextra -Werror -pedantic -ansi -fPIE 		 \
 			-fstack-protector-strong
 
 ifeq ($(PLATFORM),x86_64)
-	CFLAGS	+=	-fcf-protection=full -Wl,-z,nodlopen -Wl,-z,noexecstack \
-				-Wl,-z,relro -Wl,-z,now -fstack-clash-protection 		\
-				-fstrict-flex-arrays=3 -Wtrampolines
+	CFLAGS	:=	$(CFLAGS) -fcf-protection=full -Wl,-z,nodlopen	\
+				-Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now 		\
+				-fstack-clash-protection -fstrict-flex-arrays=3 -Wtrampolines
 endif
 
 ifeq ($(OS),Darwin)
@@ -31,14 +31,11 @@ endif
 
 # Tests compilation flags
 TESTS_CFLAGS	:=	-g -Wall -Wextra -Werror --coverage -DCRITERION_TESTS
-
-ifeq ($(PLATFORM),x86_64)
-	TESTS_CPPFLAGS	:=	-Iinclude/
-	TESTS_LDFLAGS	:=	-lcriterion
-endif
+TESTS_CPPFLAGS	:=	-Iinclude/
+TESTS_LDFLAGS	:=	-lcriterion
 
 ifeq ($(OS),Darwin)
-	TESTS_CPPFLAGS	:=	-I/opt/homebrew/include
+	TESTS_CPPFLAGS	+=	-I/opt/homebrew/include
 	TESTS_LDFLAGS	:=	-L/opt/homebrew/lib -lcriterion
 endif
 
