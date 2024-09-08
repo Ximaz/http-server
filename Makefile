@@ -12,21 +12,20 @@ OS	:=	$(shell uname -s)
 
 # Sources compilation flags
 CPPFLAGS	:=	-Iinclude/
-CFLAGS	:=	-Wall -Wextra -Werror -pedantic -ansi -fPIE 		 \
-			-fno-delete-null-pointer-checks -fno-strict-overflow \
-			-fno-strict-aliasing -ftrivial-auto-var-init=zero    \
-			-Wformat -Wimplicit-fallthrough 					 \
-			-U_FORTIFY_SOURCE -D_GLIBCXX_ASSERTIONS 			 \
+CFLAGS	:=	-Wall -Wextra -Werror -pedantic -ansi -fPIE 		 			\
+			-fno-delete-null-pointer-checks -fno-strict-overflow 			\
+			-fno-strict-aliasing -ftrivial-auto-var-init=zero    			\
+			-Wformat -Wimplicit-fallthrough 					 			\
+			-U_FORTIFY_SOURCE -D_GLIBCXX_ASSERTIONS 			 			\
 			-fstack-protector-strong
 
-ifeq ($(PLATFORM),x86_64)
-	CFLAGS	:=	$(CFLAGS) -fcf-protection=full -Wl,-z,nodlopen	\
-				-Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now 		\
-				-fstack-clash-protection -fstrict-flex-arrays=3 -Wtrampolines
+ifneq ($(OS),Darwin)
+	CFLAGS	:=	$(CFLAGS) -fstrict-flex-arrays=3 -fcf-protection=full	\
+				-fstack-clash-protection -Wtrampolines -Wl,-z,now		\
+				-Wl,-z,nodlopen -Wl,-z,noexecstack -Wl,-z,relro
 endif
-
 ifeq ($(OS),Darwin)
-	CFLAGS	+=	-mbranch-protection=standard
+	CFLAGS	:=	$(CFLAGS) -mbranch-protection=standard
 endif
 
 # Tests compilation flags
